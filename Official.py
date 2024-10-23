@@ -1,14 +1,12 @@
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-import sys
 import keras
 import numpy as np
 import csv
 from keras import Sequential
 from keras import layers
 import webbrowser
-import numpy as np
 import pandas as pd
 import requests
 
@@ -51,11 +49,10 @@ EPOCHS = 100
 MODEL_PATH = "career_model.keras" # Path where the model will be saved/loaded
 MODEL_ENGINEER_PATH = "career_engineer_model.keras"
 def main():
-    if len(sys.argv) != 3:
-        sys.exit("Error: Please provide a dataset as a CSV file.")
+    
     
     # Load evidence and labels from the dataset
-    evidence, labels = load_data(sys.argv[1])
+    evidence, labels = load_data(careers_df)
 
     # Convert evidence and labels to NumPy arrays for model training
     evidence = np.array(evidence, dtype=float)
@@ -92,7 +89,7 @@ def main():
             prediction = make_prediction(label_encoder)
             
             if prediction == "Engineer":
-                evidence2, labels2 = load_data2(sys.argv[2])
+                evidence2, labels2 = load_data2(engineer_personality_df)
                 evidence2 = np.array(evidence2, dtype=float)
                 labels2 = np.array(labels2) 
                 
@@ -120,18 +117,26 @@ def main():
                 prediction2 = make_engineer_prediction(label_encoder2)
                 
                 if prediction2 == 'Software Engineer':
-                    choice = int(input("What's your level, Beginner(1)/Advance(2)/Specialization(3)"))
+                    choice = int(input("What do you want to learn: BackEnd(1), FrontEnd(2), Applications(3), AI(4)"))
                     
                     if choice == 1:
                         webbrowser.open(
                             "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science?linked_from=autocomplete-prequery&c=autocomplete-prequery&position=1"
                         )
                     elif choice == 2:
+                        
+                        webbrowser.open(
+                            "https://www.edx.org/es/certificates/professional-certificate/w3cx-front-end-web-developer?index=spanish_product&queryID=51887fe81a69cf7085b121107ccff344&position=2&linked_from=autocomplete&c=autocomplete"
+                        )
+                    elif choice == 3:
+                        webbrowser.open(
+                            "https://www.edx.org/es/learn/django/ibm-django-application-development-with-sql-and-databases?index=spanish_product&queryID=254642d32b3012a4e3f4685d43159f33&position=7&linked_from=autocomplete&c=autocomplete"
+                        )
+                    elif choice == 4:
+                        
                         webbrowser.open(
                             "https://www.edx.org/es/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python?index=spanish_product&queryID=15bb017ce76a6d95f4dbec751c3dfab2&position=3&results_level=first-level-results&term=cs50&objectID=course-3a31db71-de8f-45f1-ae65-11981ed9d680&campaign=CS50%27s+Introduction+to+Artificial+Intelligence+with+Python&source=edX&product_category=course&placement_url=https%3A%2F%2Fwww.edx.org%2Fes%2Fsearch"
                         )
-                    
-                    elif choice == 3:
                         webbrowser.open(
                             "https://www.deeplearning.ai/courses/data-engineering/"
                         )
@@ -142,33 +147,26 @@ def main():
             break
     
 
+
 def load_data(df):
-    evidence = []
-    labels = []
-    
-    # Open and read the CSV file
-    with open(df, 'r') as f1:
-        reader = csv.reader(f1)
-        next(reader)  # Skip header if necessary
-        for row in reader:
-            # Assumes the first 8 columns are features and the 9th column is the label
-            evidence.append(row[2:8])  # Collect the first 8 columns as evidence
-            labels.append(row[8])     # Collect the 9th column as the label
+    # Use the relevant columns for evidence and labels
+    evidence = df[['Realistic', 'Investigative', 'Artistic', 'Social', 'Enterprising', 'Conventional']]
+    labels = df['Best Career']
     
     return evidence, labels
 
 def load_data2(df):
-    evidece = []
-    labels = []
+    # Use the relevant columns for evidence and labels in the engineer personality dataset
+    evidence = df[['Manipulation Capacity', 'Analitical Capacity', 'Computer Skills', 'Teamwork', 'Self Learning']]
+    labels = df['Best Career']
     
-    with open(df,"r") as f2:
-        reader = csv.reader(f2)
-        next(reader)
-        for row in reader:
-            evidece.append(row[2:7]) #2 #3 #4 #5 #6
-            labels.append(row[7])
-        
-        return evidece, labels
+    return evidence, labels
+
+
+    
+    # Open and read the CSV file
+    
+    
 def get_model(input_size, num_classes):
     # Define the model using the Sequential API
     model = Sequential()
