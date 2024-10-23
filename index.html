@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Career Path Assessment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles.css') }}">
+   
+</head>
+<body>
+    <header>
+        <h1>Career Path Assessment</h1>
+    </header>
+
+    <section class="form-section">
+        <div class="container">
+            <h2>Fill in Your Details</h2>
+
+            <form action="/predict" method="POST">
+                <div class="form-group">
+                    <label for="analytical">Realistic:</label>
+                    <input type="number" id="analytical" name="analytical" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="manipulation">Investigative:</label>
+                    <input type="number" id="manipulation" name="manipulation" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="computer">Artistic:</label>
+                    <input type="number" id="computer" name="computer" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamwork">Social:</label>
+                    <input type="number" id="teamwork" name="teamwork" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="selflearning">'Enterprising':</label>
+                    <input type="number" id="selflearning" name="selflearning" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="leadership">Convetional</label>
+                    <input type="number" id="leadership" name="leadership" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">Get Career Prediction</button>
+                </div>
+            </form>
+
+            <!-- Display prediction and link to engineer test if applicable -->
+            {% if prediction %}
+                <div class="result">
+                    <h3>Your predicted career is: <strong>{{ prediction }}</strong></h3>
+                    {% if prediction == 'Engineer' %}
+                        <a href="{{ url_for('engineer_test') }}">Start Engineer Personality Test</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Career Path Assessment. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Engineer Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Engineer Career Prediction</h1>
+    </header>
+
+    <section class="form-section">
+        <div class="container">
+            <h2>Your Final Engineer Prediction</h2>
+            <div class="result">
+                <h3>Your predicted career is: <strong>{{ prediction }}</strong></h3>
+            </div>
+
+            <!-- Link to go back to home -->
+            <a href="{{ url_for('index') }}">Go back to Home</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Engineer Prediction System. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+

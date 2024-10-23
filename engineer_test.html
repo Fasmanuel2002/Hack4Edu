@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Engineer Personality Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Engineer Personality Test</h1>
+    </header>
+
+    <section class="form-section">
+        <div class="container">
+            <h2>Fill in the Engineer Personality Test</h2>
+
+            <form action="/engineer_predict" method="POST">
+                <div class="form-group">
+                    <label for="manipulation">Manipulation Capacity:</label>
+                    <input type="number" id="manipulation" name="manipulation" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="analytical">Analytical Capacity:</label>
+                    <input type="number" id="analytical" name="analytical" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="computer">Computer Skills:</label>
+                    <input type="number" id="computer" name="computer" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamwork">Teamwork Skills:</label>
+                    <input type="number" id="teamwork" name="teamwork" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="selflearning">Self-Learning Ability:</label>
+                    <input type="number" id="selflearning" name="selflearning" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">Submit Engineer Test</button>
+                </div>
+            </form>
+            
+            <!-- Link to go back to home -->
+            <a href="{{ url_for('index') }}">Go back to Home</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Engineer Personality Test. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
