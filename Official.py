@@ -8,13 +8,48 @@ import csv
 from keras import Sequential
 from keras import layers
 import webbrowser
+import numpy as np
+import pandas as pd
+import requests
+
+# URLs for your files on Google Cloud Storage (replace these with actual public URLs)
+careers_csv_url = "https://storage.googleapis.com/hack4eduprofrom/Careers.csv"
+engineer_personality_dataset_csv_url = "https://storage.googleapis.com/hack4eduprofrom/engineer_personality_dataset.csv"
+career_model_url = "https://storage.googleapis.com/hack4eduprofrom/career_model.keras"
+career_engineer_model_url = "https://storage.googleapis.com/hack4eduprofrom/career_engineer_model.keras"
+
+# Function to download and save a file from a given URL
+def download_file(url, local_filename):
+    print(f"Downloading {url}...")
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(local_filename, 'wb') as f:
+            f.write(response.content)
+        print(f"Downloaded and saved as {local_filename}")
+    else:
+        print(f"Failed to download {url}")
+
+# Download CSV and model files from Google Cloud Storage
+download_file(careers_csv_url, "Careers.csv")
+download_file(engineer_personality_dataset_csv_url, "engineer_personality_dataset.csv")
+download_file(career_model_url, "career_model.keras")
+download_file(career_engineer_model_url, "career_engineer_model.keras")
+
+# Load the CSV files into Pandas DataFrames
+careers_df = pd.read_csv("Careers.csv")
+engineer_personality_df = pd.read_csv("engineer_personality_dataset.csv")
+
+# Load the models
+career_model = keras.models.load_model("career_model.keras")
+career_engineer_model = keras.models.load_model("career_engineer_model.keras")
+
+# Now you can proceed with the rest of your original logic as it was...
 
 
-# Constants
 TEST_SIZE = 0.4
 EPOCHS = 100
-MODEL_PATH = "career_model.h5"  # Path where the model will be saved/loaded
-MODEL_ENGINEER_PATH = "career_engineer_model.h5"
+MODEL_PATH = "career_model.keras" # Path where the model will be saved/loaded
+MODEL_ENGINEER_PATH = "career_engineer_model.keras"
 def main():
     if len(sys.argv) != 3:
         sys.exit("Error: Please provide a dataset as a CSV file.")
